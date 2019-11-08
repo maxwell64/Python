@@ -10,7 +10,7 @@ class Population:
         self.players = []
         self.fitnessSum = 0
         self.generation = 1
-        self.allDead = True
+        self.allDead = False
         self.bestFitness = 0
 
         for i in range(totalPlayers):
@@ -33,7 +33,7 @@ class Population:
         for i in self.players:
             if i.dead != True:
                 return False
-        return True
+        return False
 
     def calculateFitness(self):
         for i in self.players:
@@ -42,7 +42,7 @@ class Population:
 
     def naturalSelection(self):
         newPlayers = []
-        newPlayers.append(self.selectBest().clonePlayer())
+        newPlayers.append(self.bestPlayer.clonePlayer())
         while len(newPlayers) < len(self.players):
             for i in range(1,len(self.players)):
                 parent = self.selectParent()
@@ -52,7 +52,7 @@ class Population:
         self.generation += 1
 
     def selectParent(self):
-        rand = np.random.randint(int(self.fitnessSum))
+        rand = np.random.uniform(0,self.fitnessSum)
         runningSum = 0
         for i in self.players:
             runningSum += i.fitness

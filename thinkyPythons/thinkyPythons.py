@@ -9,10 +9,9 @@ goalPos = np.array([500,20])
 
 test = Population(200)
 while test.generation < 1000:
-    test.checkAllDead()
-    print(test.generation)
     if (test.allDead != True):
         test.updateAll()
+        test.checkAllDead()
     else:
         test.calculateFitness()
         print(test.fitnessSum)
@@ -21,5 +20,5 @@ while test.generation < 1000:
         print(test.bestPlayer.distanceToGoal)
         test.naturalSelection()
         test.mutants()
-        test.generation += 1
         test.fitnessSum = 0
+        test.checkAllDead()
