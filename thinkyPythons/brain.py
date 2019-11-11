@@ -11,16 +11,16 @@ class Brain:
 
     def randomise(self):
         for i in range(self.size):
-            self.memory.append(np.array([np.random.randint(5),np.random.randint(5)]))
+            self.memory.append(np.array([np.random.randint(-5,5),np.random.randint(-5,5)]))
 
     def clone(self):
         clone = Brain(len(self.memory))
         for i in range(len(self.memory)):
-            clone.memory[i] = self.memory[i]
+            clone.memory.append(self.memory[i])
         return clone
 
     def mutate(self):
         for i in self.memory:
             rand = np.random.random_sample()
             if rand < self.mutationRate:
-                i = np.array([np.random.randint(5),np.random.randint(5)])
+                i = np.array([np.random.randint(-5,5),np.random.randint(-5,5)])

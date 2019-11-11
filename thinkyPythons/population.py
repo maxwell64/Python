@@ -27,13 +27,12 @@ class Population:
             if i.fitness > self.bestFitness:
                 self.bestPlayer = i
                 self.bestFitness = self.bestPlayer.fitness
-        return self.bestPlayer
 
     def checkAllDead(self):
         for i in self.players:
             if i.dead != True:
-                return False
-        return False
+                self.allDead = False
+        self.allDead = True
 
     def calculateFitness(self):
         for i in self.players:
@@ -47,8 +46,10 @@ class Population:
             for i in range(1,len(self.players)):
                 parent = self.selectParent()
                 clone = parent.clonePlayer()
+                clone.dead = False
                 newPlayers.append(clone)
         self.players = newPlayers
+        self.mutants()
         self.generation += 1
 
     def selectParent(self):
@@ -59,7 +60,6 @@ class Population:
             if runningSum > rand:
                 return i
         return None
-
 
     def mutants(self):
         for i in self.players:

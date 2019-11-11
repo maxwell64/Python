@@ -8,34 +8,29 @@ class Player:
 
     def __init__(self):
 
-        self.pos = np.array([width/2,height/8])
-        self.vel = np.array([0,0])
+        self.pos = np.array([width/2,7*height/8])
         self.acc = np.array([0,0])
         self.dead = False
         self.reachedGoal = False
-        self.isBest = False
         self.fitness = 0
-        self.brain = Brain(200)
+        self.brain = Brain(700)
         self.brain.randomise()
 
     def update(self):
-        if (len(self.brain.memory) > self.brain.step):
+        while (len(self.brain.memory) > self.brain.step):
             self.acc = self.brain.memory[self.brain.step]
             self.brain.step += 1
-        self.vel = np.add(self.vel,self.acc)
-        self.pos = np.add(self.pos,self.vel)
-        self.brain.step += 1
-
-        if (self.pos[0] == goalPos[0] and self.pos[1] == goalPos[1]):
-            self.reachedGoal = True
-        if (self.pos[0] > width or self.pos[0] < 0 or self.pos[1] > height or self.pos[1] < 0 or self.brain.step > self.brain.size):
-            self.dead = True
+            self.pos = np.add(self.pos,self.acc)
+            if (self.pos[0] == goalPos[0] and self.pos[1] == goalPos[1]):
+                self.reachedGoal = True
+            if (self.pos[0] >= width or self.pos[0] <= 0 or self.pos[1] >= height or self.pos[1] <= 0 or self.brain.step >= self.brain.size):
+                self.dead = True
 
     def calculateFitness(self):
         if self.reachedGoal:
             self.fitness = 1.0 / (16.0 * 1000.0 / float(brain.step * brain.step))
         else:
-            self.distanceToGoal = np.sum(np.subtract(goalPos,self.pos))
+            self.distanceToGoal = np.abs(np.sum(np.subtract(goalPos,self.pos)))
             self.fitness = 1.0 / (self.distanceToGoal ** 2)
 
     def clonePlayer(self):
