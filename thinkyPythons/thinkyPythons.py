@@ -3,20 +3,18 @@ from population import Population
 from brain import Brain
 from player import Player
 
-height = 1000
-width = 1000
-goalPos = np.array([500,20])
+height = 500
+width = 500
+goalPos = np.array([250,20])
 
-test = Population(200)
-while test.generation < 1000:
+test = Population(20)
+while test.generation < 100:
+    print(test.generation)
     while (test.allDead != True):
         test.updateAll()
         test.checkAllDead()
     test.calculateFitness()
     print(test.fitnessSum)
     test.selectBest()
-    print(test.bestPlayer.distanceToGoal)
-    print(test.generation)
     test.naturalSelection()
-    test.fitnessSum = 0
     test.allDead = False

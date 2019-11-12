@@ -43,11 +43,10 @@ class Population:
         newPlayers = []
         newPlayers.append(self.bestPlayer.clonePlayer())
         while len(newPlayers) < len(self.players):
-            for i in range(1,len(self.players)):
-                parent = self.selectParent()
-                clone = parent.clonePlayer()
-                clone.dead = False
-                newPlayers.append(clone)
+            parent = self.selectParent()
+            clone = parent.clonePlayer()
+            clone.dead = False
+            newPlayers.append(clone)
         self.players = newPlayers
         self.mutants()
         self.generation += 1

@@ -1,8 +1,8 @@
 from brain import Brain
 import numpy as np
-width = 1000
-height = 1000
-goalPos = np.array([500,20])
+width = 500
+height = 500
+goalPos = np.array([250,20])
 
 class Player:
 
@@ -13,7 +13,7 @@ class Player:
         self.dead = False
         self.reachedGoal = False
         self.fitness = 0
-        self.brain = Brain(700)
+        self.brain = Brain(400)
         self.brain.randomise()
 
     def update(self):
@@ -27,10 +27,10 @@ class Player:
                 self.dead = True
 
     def calculateFitness(self):
-        if self.reachedGoal:
-            self.fitness = 1.0 / (16.0 * 1000.0 / float(brain.step * brain.step))
+        if self.reachedGoal == True:
+            self.fitness = 1.0 / (16.0 * 1000.0 / float(brain.step ** 2))
         else:
-            self.distanceToGoal = np.abs(np.sum(np.subtract(goalPos,self.pos)))
+            self.distanceToGoal = np.abs(np.sum(np.dot(goalPos,self.pos)))
             self.fitness = 1.0 / (self.distanceToGoal ** 2)
 
     def clonePlayer(self):
