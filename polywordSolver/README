@@ -1,0 +1,1 @@
+A solver for polyword puzzles where the most words possible have to found which consist of any combination of 9 given letters, including a "key" letter which has to be in every word.
