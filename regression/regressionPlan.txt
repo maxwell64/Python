@@ -1,0 +1,13 @@
+Steps to produce a regression model in Python:
+
+1 - Create random datasets for testing of linear model -- done
+
+2 - Code linear regression algorithm
+
+    - Randomise starting equation for predicted line
+
+    - Calculate SSE of the predicted points
+
+    - Calculate gradient of SSE(b)/SSE(b-1)
+
+3 - Test linear regression algorithm on sample dataset
