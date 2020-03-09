@@ -1,0 +1,1 @@
+Scrapes the yahoo finance page for Alphabet and returns several statistics (can be tuned to return more data or different companies)
