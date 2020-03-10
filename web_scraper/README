@@ -1,1 +1,2 @@
 Scrapes the yahoo finance page for Alphabet and returns several statistics (can be tuned to return more data or different companies)
+Also now prints the data to a highlighted text file along with the date and time, for comparison purposes.
