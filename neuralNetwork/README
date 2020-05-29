@@ -1,0 +1,1 @@
+A 2-layer neural network which, in its current form, analyses cancer data and predicts whether a tumor is malignant or benign. Based on https://towardsdatascience.com/predict-malignancy-in-breast-cancer-tumors-with-your-own-neural-network-and-the-wisconsin-dataset-76271a05e941
