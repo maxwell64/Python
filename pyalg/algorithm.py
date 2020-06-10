@@ -16,11 +16,11 @@ def create_population(size):
     for i in range(size):
         temp = Mol()
         population.append(temp)
-
     return population
 
 
 def run(pop):
+    # Runs the full test and computes the fitness of the mols
     step = 0
     fitness_sum = 0
     global fitness_average
@@ -32,15 +32,27 @@ def run(pop):
         i.measure_fitness(goal)
         fitness_sum += i.fitness
     fitness_average = fitness_sum / population_size
+    select_best(pop)
+
+
+def select_best(pop):
+    # Finds the mol with the highest fitness value
+    best_fitness = 0
+    global best
+    for i in pop:
+        if i.fitness > best_fitness:
+            best_fitness = i.fitness
+            best = i
 
 
 def main():
     population = create_population(population_size)
     run(population)
-    print(population[99].mutation_count)
-    print(population[99].pos)
-    print(population[99].vel)
-    print(population[99].is_dead)
+    print(best.mutation_count)
+    print(best.is_dead)
+    print(best.pos)
+    print(best.fitness)
+    print(fitness_average)
 
 
 if __name__ == "__main__":
