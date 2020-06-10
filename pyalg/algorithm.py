@@ -26,7 +26,7 @@ def run(pop):
     global fitness_average
     while step < lifetime:
         for i in pop:
-            i.update()
+            i.update(step, dimensions)
         step += 1
     for i in pop:
         i.measure_fitness(goal)
@@ -36,11 +36,11 @@ def run(pop):
 
 def main():
     population = create_population(population_size)
-    print(population[99].pos)
     run(population)
+    print(population[99].mutation_count)
     print(population[99].pos)
-    print(population[99].mutation_count, population[99].fitness)
-    print(fitness_average)
+    print(population[99].vel)
+    print(population[99].is_dead)
 
 
 if __name__ == "__main__":
