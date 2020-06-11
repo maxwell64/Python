@@ -7,12 +7,14 @@ rng = default_rng()
 class Mol:
     def __init__(self):
         # Initialises a new mol with start position and random velocity vector
+        # Also presets a few important parameters for later
         self.pos = [500, 500]
         self.vel = list(rng.standard_normal(2))
         self.mutation_count = 0
         self.fitness = 0
         self.memory = []
         self.is_dead = False
+        self.is_best = False
 
     def mutate(self):
         # Randomises the velocity of the mol
@@ -56,7 +58,7 @@ class Mol:
         # Calculates the fitness (distance from goal) of the mol at finish
         xdiff = 1 / np.abs(self.pos[0] - goal[0])
         ydiff = 1 / np.abs(self.pos[1] - goal[1])
-        self.fitness = np.sqrt(xdiff**2 + ydiff**2)
+        self.fitness = np.sqrt(xdiff**2 + ydiff**2) ** 3
 
     def clone(self):
         new_mol = Mol()
