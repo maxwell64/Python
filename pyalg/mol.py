@@ -18,7 +18,8 @@ class Mol:
 
     def mutate(self):
         # Randomises the velocity of the mol
-        self.vel = list(rng.standard_normal(2))
+        if not self.is_best:
+            self.vel = list(rng.standard_normal(2))
 
     def remember(self, i):
         # Saves the velocities to the memory of the mol
@@ -36,7 +37,7 @@ class Mol:
 
     def update(self, i, bounds):
         # Updates the position of the mol and mutates if conditions are met
-        # Also calls the remember function
+        # Also calls the remember function and determines if the mol is dead
         if not self.is_dead:
             mutation_factor = np.random.random()
             if len(self.memory) <= i:
@@ -56,11 +57,14 @@ class Mol:
 
     def measure_fitness(self, goal):
         # Calculates the fitness (distance from goal) of the mol at finish
-        xdiff = 1 / np.abs(self.pos[0] - goal[0])
-        ydiff = 1 / np.abs(self.pos[1] - goal[1])
-        self.fitness = np.sqrt(xdiff**2 + ydiff**2) ** 3
+        xdiff = np.abs(self.pos[0] - goal[0])
+        ydiff = np.abs(self.pos[1] - goal[1])
+        self.fitness = (1 / np.sqrt(xdiff**2 + ydiff**2)) + 2
 
     def clone(self):
+        # Returns a clone with the memories of the mol
         new_mol = Mol()
         new_mol.memory = self.memory
+        if self.is_best:
+            new_mol.is_best = True
         return new_mol
