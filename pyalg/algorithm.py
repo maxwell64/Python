@@ -32,7 +32,7 @@ def run(pop):
         fitness_average = 0
         while step < lifetime:
             for i in group:
-                i.update(step, dimensions)
+                i.update(step, dimensions, goal)
             step += 1
         for i in group:
             i.measure_fitness(goal)

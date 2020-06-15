@@ -15,6 +15,7 @@ class Mol:
         self.memory = []
         self.is_dead = False
         self.is_best = False
+        self.reached_goal = False
 
     def mutate(self):
         # Randomises the velocity of the mol
@@ -28,14 +29,17 @@ class Mol:
         else:
             self.memory[i] = self.vel
 
-    def kill(self, bounds):
+    def kill(self, bounds, goal):
         # Kills the mol if it escapes the area
         if self.pos[0] >= bounds[0] or self.pos[1] >= bounds[1]:
             self.is_dead = True
         if self.pos[0] <= 0 or self.pos[1] <= 0:
             self.is_dead = True
+        if self.pos[0] == goal[0] and self.pos[1] == goal[1]:
+            self.is_dead = True
+            self.reached_goal = True
 
-    def update(self, i, bounds):
+    def update(self, i, bounds, goal):
         # Updates the position of the mol and mutates if conditions are met
         # Also calls the remember function and determines if the mol is dead
         if not self.is_dead:
@@ -51,7 +55,7 @@ class Mol:
                     self.mutate()
                     self.mutation_count += 1
             self.remember(i)
-            self.kill(bounds)
+            self.kill(bounds, goal)
             self.pos[0] += self.vel[0]
             self.pos[1] += self.vel[1]
 
@@ -59,7 +63,9 @@ class Mol:
         # Calculates the fitness (distance from goal) of the mol at finish
         xdiff = np.abs(self.pos[0] - goal[0])
         ydiff = np.abs(self.pos[1] - goal[1])
-        self.fitness = (1 / np.sqrt(xdiff**2 + ydiff**2)) + 2
+        self.fitness = np.exp(1 / np.sqrt(xdiff**2 + ydiff**2))
+        if self.reached_goal:
+            self.fitness += 2
 
     def clone(self):
         # Returns a clone with the memories of the mol
