@@ -18,11 +18,11 @@ class Expense_List:
         return out
 
     def return_last(self):
-        # Returns the last expense Expense (for showing in window)
-        return self.expense_list[-1].read() + '\n'
+        # Returns the last expense input (for printing to file)
+        return self.get(-1).read() + '\n'
 
     def add(self, x):
-        # Adds a new expense Expense
+        # Adds a new expense input
         self.expense_list.append(Expense(x))
 
     def from_file(self, file):
@@ -36,3 +36,10 @@ class Expense_List:
             temp.currency = i[0][0]
             self.expense_list.append(temp)
 
+    def get(self, index):
+        # Returns the specified value
+        return self.expense_list[index]
+
+    def set_currency(self, index, c):
+        # Sets the currency of the specified value
+        self.expense_list[index].currency = c
