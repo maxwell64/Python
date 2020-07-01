@@ -63,10 +63,11 @@ def select_parent(pop):
     running_sum = 0
     rand = np.random.uniform(0, fitness_sum)
     for i in pop:
-        while running_sum < rand:
+        if running_sum < rand:
             running_sum += i.fitness
-        new = i.clone()
-        return new
+        if running_sum >= rand:
+            new = i.clone()
+            return new
 
 
 def improve(pop):

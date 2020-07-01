@@ -43,7 +43,7 @@ class Mol:
         # Updates the position of the mol and mutates if conditions are met
         # Also calls the remember function and determines if the mol is dead
         if not self.is_dead:
-            mutation_factor = np.random.random()
+            mutation_factor = np.random.random_sample()
             if len(self.memory) <= i:
                 if mutation_factor < 0.01:
                     self.mutate()
@@ -63,7 +63,7 @@ class Mol:
         # Calculates the fitness (distance from goal) of the mol at finish
         xdiff = np.abs(self.pos[0] - goal[0])
         ydiff = np.abs(self.pos[1] - goal[1])
-        self.fitness = np.exp(1 / np.sqrt(xdiff**2 + ydiff**2))
+        self.fitness = 1 / (xdiff**2 + ydiff**2)
         if self.reached_goal:
             self.fitness += 2
 
