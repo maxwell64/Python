@@ -1,5 +1,6 @@
 from expense import Expense
 from datetime import datetime
+import database
 
 class Expense_List:
     # Class to contain a list of expense inputs and neatly access them
@@ -25,15 +26,13 @@ class Expense_List:
         # Adds a new expense input
         self.expense_list.append(Expense(x))
 
-    def from_file(self, file):
+    def from_file(self, file, conn):
         # Loads previous expenses from a specified .txt file
-        f = open(str(file), 'r')
-        lines = f.read().split('\n')
-        for i in lines[1:-1]:
-            i = i.split(', ')
-            temp = Expense(float(i[0][1:]))
-            temp.date = datetime.strptime(i[1], '%Y-%m-%d').date()
-            temp.currency = i[0][0]
+        expenses = database.fetch_all(conn)
+        for i in expenses:
+            temp = Expense(i[2])
+            temp.date = datetime.strptime(i[3], '%Y-%m-%d').date()
+            temp.currency = i[1]
             self.expense_list.append(temp)
 
     def get(self, index):
@@ -43,3 +42,9 @@ class Expense_List:
     def set_currency(self, index, c):
         # Sets the currency of the specified value
         self.expense_list[index].currency = c
+
+    def total(self):
+        total = 0
+        for i in self.expense_list:
+            total += i.amount
+        return total
